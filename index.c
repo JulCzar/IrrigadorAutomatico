@@ -1,8 +1,8 @@
 #include <Servo.h>
 
-int SensorHum_1 = 0;
-int SensorHum_2 = 0;
-int SensorHum_3 = 0;
+int SensorUmid_1 = 0;
+int SensorUmid_2 = 0;
+int SensorUmid_3 = 0;
 int SensorTemp_1 = 0;
 int SensorTemp_2 = 0;
 int SensorTemp_3 = 0;
@@ -21,6 +21,7 @@ void setup()
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
   pinMode(A5, INPUT);
+
   //Saidas digitais
   pinMode(6, OUTPUT);
   pinMode(7, OUTPUT);
@@ -35,22 +36,26 @@ void setup()
 void loop()
 {
   //Leitura dos sensores de humidade
-  SensorHum_1 = analogRead(A3);
-  SensorHum_2 = analogRead(A4);
-  SensorHum_3 = analogRead(A5);
+  SensorUmid_1 = analogRead(A3);
+  SensorUmid_2 = analogRead(A4);
+  SensorUmid_3 = analogRead(A5);
+
+  //Transforma a leitura do sensor de umidade em porcentagem
+  SensorUmid_1 = map(SensorUmid_1, 1023, 0, 0, 100)
+  SensorUmid_2 = map(SensorUmid_2, 1023, 0, 0, 100)
+  SensorUmid_3 = map(SensorUmid_3, 1023, 0, 0, 100)
+
   //Leituras dos sensores de temperatura
   SensorTemp_1 = (-40 + 0.488155 * (analogRead(A2) - 20) + 1);
   SensorTemp_2 = (-40 + 0.488155 * (analogRead(A1) - 20) + 1);
   SensorTemp_3 = (-40 + 0.488155 * (analogRead(A0) - 20) + 1);
 
   //Modulo do primeiro sensor de umidade
-  if (SensorHum_1 >= 800) {
+  if (SensorUmid_1 <= 50) {
     servo_3.write(240);
-    digitalWrite(6, HIGH);
-  } else if (SensorHum_1 >= 500) {
+  } else if (SensorUmid_1 <= 60) {
     servo_3.write(150);
-    digitalWrite(6, HIGH);
-  } else if (SensorHum_1 >= 300) {
+  } else if (SensorUmid_1 <= 74) {
     servo_3.write(90);
     digitalWrite(6, HIGH);
   } else {
@@ -59,13 +64,11 @@ void loop()
   }
 
   //Segundo sensor de umidade
-  if (SensorHum_2 >= 800) {
+  if (SensorUmid_2 <= 50) {
     servo_4.write(240);
-    digitalWrite(7, HIGH);
-  } else if (SensorHum_2 >= 500) {
+  } else if (SensorUmid_2 <= 60) {
     servo_4.write(150);
-    digitalWrite(7, HIGH);
-  } else if (SensorHum_2 >= 300) {
+  } else if (SensorUmid_2 <= 74) {
     servo_4.write(90);
     digitalWrite(7, HIGH);
   } else {
@@ -74,13 +77,11 @@ void loop()
   }
 
   //terceiro sensor de umidade
-  if (SensorHum_3 >= 800) {
+  if (SensorUmid_3 <= 50) {
     servo_5.write(240);
-    digitalWrite(8, HIGH);
-  } else {if (SensorHum_3 >= 500) {
+  } else {if (SensorUmid_3 <= 60) {
     servo_5.write(150);
-    digitalWrite(8, HIGH);
-  } else if (SensorHum_3 >= 300) {
+  } else if (SensorUmid_3 <= 74) {
     servo_5.write(90);
     digitalWrite(8, HIGH);
   } else {
