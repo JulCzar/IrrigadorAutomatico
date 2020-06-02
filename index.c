@@ -14,12 +14,14 @@ Servo servo_5;
 
 void setup()
 {
+  //Leituras analógicas
   pinMode(A0, INPUT);
   pinMode(A1, INPUT);
   pinMode(A2, INPUT);
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
   pinMode(A5, INPUT);
+  //Saidas digitais
   pinMode(6, OUTPUT);
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
@@ -61,7 +63,7 @@ void loop()
     servo_4.write(240);
     digitalWrite(7, HIGH);
   } else if (SensorHum_2 >= 500) {
-    servo_4.write(90);
+    servo_4.write(150);
     digitalWrite(7, HIGH);
   } else if (SensorHum_2 >= 300) {
     servo_4.write(90);
@@ -75,8 +77,8 @@ void loop()
   if (SensorHum_3 >= 800) {
     servo_5.write(240);
     digitalWrite(8, HIGH);
-  } else if (SensorHum_3 >= 500) {
-    servo_5.write(90);
+  } else {if (SensorHum_3 >= 500) {
+    servo_5.write(150);
     digitalWrite(8, HIGH);
   } else if (SensorHum_3 >= 300) {
     servo_5.write(90);
