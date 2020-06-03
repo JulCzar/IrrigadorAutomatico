@@ -22,11 +22,11 @@ void setup() {
 }
 
 void loop() {
-
   for (int i = 0; i < n; i += 1) {
     int sensorTemp = posTemp[i];
     int sensorUmid = posUmid[i];
 
+    //Conversão dos valores das leituras dos modulos para Celsius e porcentagem
     int temp = (-40 + 0.488155 * (analogRead(sensorTemp) - 20) + 1);
     int umid = map(analogRead(sensorUmid), 1023, 0, 0, 100);
 
@@ -45,5 +45,5 @@ void loop() {
     }
   }
 
-  delay(10); // Delay a little bit to improve simulation performance
+  delay(50); // Delay a little bit to improve simulation performance
 }
