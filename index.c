@@ -22,26 +22,30 @@ void setup() {
 }
 
 void loop() {
-  for (int i = 0; i < n; i += 1) {
+  for (int i = 0; i < n; i++) {
     int sensorTemp = posTemp[i];
     int sensorUmid = posUmid[i];
+    Servo torneira = servos[i];
+    int LedStatus = i + 6;
 
-    //Conversão dos valores das leituras dos modulos para Celsius e porcentagem
+    /*Leitura e Conversão do valor dos sensores de temperatura e
+      umidade, para Celsius e Porcentagem, respectivamente.*/
     int temp = (-40 + 0.488155 * (analogRead(sensorTemp) - 20) + 1);
     int umid = map(analogRead(sensorUmid), 1023, 0, 0, 100);
 
+    // Verificação da umidade e temperatura para atuação na torneira.
     if (umid <= 30) {
-      servos[i].write(225 + temp);
-      digitalWrite(i + 6, HIGH);
+      torneira.write(225 + temp);
+      digitalWrite(LedStatus, HIGH);
     } else if (umid <= 50) {
-      servos[i].write(145 + temp);
-      digitalWrite(i + 6, HIGH);
+      torneira.write(145 + temp);
+      digitalWrite(LedStatus, HIGH);
     } else if (umid <= 74) {
-      servos[i].write(90 + temp);
-      digitalWrite(i + 6, HIGH);
+      torneira.write(90 + temp);
+      digitalWrite(LedStatus, HIGH);
     } else {
-      servos[i].write(0);
-      digitalWrite(i + 6, LOW);
+      torneira.write(0);
+      digitalWrite(LedStatus, LOW);
     }
   }
 
